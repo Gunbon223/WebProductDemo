@@ -1,10 +1,143 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Main</title>
+    <style>
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+        a {
+            text-decoration: none;
+            color: black;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .card {
+            box-shadow: 0px 4px 5px 0px rgba(0,0,0,0.32);
+            width: 20%;
+            height: 400px;
+            margin: 10px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .card-body h5 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .card-price {
+            font-size: 16px;
+            color: red;
+        }
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+        }
+
+        li {
+            margin: 5px;
+        }
+
+        li a {
+            display: block;
+            color: black;
+            text-align: center;
+            padding: 5px 10px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .navbar {
+            background-color: #333;
+            overflow: hidden;
+            width: 100%;
+            position: sticky;
+            top: 0;
+        }
+        .navbar a {
+            float: left;
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        .search-container {
+            float: right;
+        }
+        .search-container button {
+            padding: 6px 10px;
+            margin-top: 8px;
+            margin-right: 16px;
+            background: #ddd;
+            font-size: 17px;
+            border: none;
+            cursor: pointer;
+        }
+        .search-container input[type=text] {
+            padding: 6px;
+            margin-top: 8px;
+            margin-right: 16px;
+            border: none;
+            font-size: 17px;
+        }
+    </style>
 </head>
 <body>
-$END$
+<div class="navbar">
+    <a href="/product">Home</a>
+    <div class="search-container">
+        <form action="/action_page.php">
+            <input type="text" placeholder="Search..." name="search">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+</div>
+<div class="container">
+
+    <h1 style="text-align: center">Danh sách Xe</h1>
+    <div class="row">
+        <div th:each="product, iterStat : ${pageData.getContent()}" class="card">
+            <a th:href="@{/product/detail (id =${product.id})}">
+            <img th:src="${product.thumbnail}" alt="Product image" class="card-img">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${product.name} + ' - ' + ${product.getDescription()}"></h5>
+                <p class="card-price" th:style="${product.priceDiscount != 0} ? 'text-decoration: line-through;' : ''" th:text="'$' + ${product.price}"></p>
+                <p class="card-sale-price" th:if="${product.priceDiscount != 0}" th:text="'$' + ${product.getDiscountedPrice()}"></p>
+                <div class="card-rating" th:text="${product.rating}+'⭐'"  ></div>
+            </div>
+            </a>
+        </div>
+    </div>
+
+    <ul>
+        <li>
+            <button th:disabled="${pageData.getCurrentPage() == 1}"><a th:href="@{/product (page =${pageData.getCurrentPage() -1 })}">Previous</a></button>
+        </li>
+        <li th:each="pageNum : ${#numbers.sequence(1,pageData.getTotalPages())}">
+            <button><a th:href="@{/product (page =${pageNum})}" th:text="${pageNum}"></a></button>
+        </li>
+        <li>
+            <button th:disabled="${pageData.getCurrentPage() == pageData.getTotalPages()}"><a th:href="@{/product (page =${pageData.getCurrentPage() +1})}" >Next</a></button>
+        </li>
+    </ul>
+</div>
 </body>
 </html>

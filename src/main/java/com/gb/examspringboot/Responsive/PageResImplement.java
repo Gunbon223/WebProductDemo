@@ -1,7 +1,6 @@
-package org.gb.demobprj.response;
+package com.gb.examspringboot.Responsive;
 
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 @Getter

@@ -1,4 +1,4 @@
-package org.gb.demobprj.response;
+package com.gb.examspringboot.Responsive;
 
 import java.util.List;
 

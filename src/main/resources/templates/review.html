@@ -1,10 +1,39 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Product Detail</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color:black;
+            color: white;
+        }
+        .product {
+            margin: 20px;
+        }
+        .review {
+            margin: 20px;
+            border-top: 1px solid white;
+        }
+    </style>
 </head>
 <body>
-$END$
+<div class="product">
+    <h1 th:text="${product.name}"></h1>
+    <img th:src="${product.getThumbnail()}" alt="Product Image" style="width: auto; height: auto;">
+    <p th:text="${product.description}"></p>
+
+    <p th:text="'Price: $' + ${product.price}"></p>
+    <p th:text="'Rating: ' + ${product.rating} + ' stars'"></p>
+</div>
+
+<h2>Reviews</h2>
+<div th:each="review : ${reviews}" class="review">
+    <h3 th:text="${review.authorName}"></h3>
+    <p th:text="${review.content}"></p>
+    <p th:text="${review.rating} + '⭐ '"></p>
+    <p th:text="${review.createdAt}"></p>
+</div>
 </body>
 </html>
