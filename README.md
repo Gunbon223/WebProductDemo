@@ -2,9 +2,8 @@
 Created by: Nguyễn Như Huy Hoàng
 
 ## Các tính năng chính
-
-Giao diện trang:
-![Home](home.png)
+Giao diện chính:
+![Home](Home.png)
 Phân trang:
 ![Paging](Paging.png)
 Review sản phẩm khi ấn vào card:
